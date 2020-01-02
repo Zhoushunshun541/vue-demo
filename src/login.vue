@@ -38,7 +38,7 @@ export default {
       },
       name: '',
       pwd: '',
-      changeBg: 0,// 切换登录背景图  动态图过于消耗内存
+      changeBg: 1// 切换登录背景图  动态图过于消耗内存
     }
   },
   methods: {

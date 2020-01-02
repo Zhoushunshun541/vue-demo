@@ -6,5 +6,5 @@ var instance = axios.create({
 })
 
 export const getAllUser = params => {
-  return instance.post('/user/getAllUser', qs.stringify(params))
+  return instance.post('/login/login', qs.stringify(params))
 }
