@@ -1,15 +1,23 @@
 <template>
   <div class="login">
-    <vue-canvas-nest :config='bgConfig'></vue-canvas-nest>
-    <div class="login-model">
-      <div class="mb10 login-title" style="color:#fff;">登录</div>
-      <div class="mb20 bb-color">
-        <input type="text" v-model="name" placeholder="请输入账户" class="login-input">
+    <div :class="changeBg == 1?'your-name':''">
+      <template v-if="changeBg == 0" >
+        <vue-canvas-nest :config='bgConfig'></vue-canvas-nest>
+      </template>
+      <div class="login-model">
+        <div class="mb10 login-title" style="color:#fff;">登录</div>
+        <div class="mb20 bb-color">
+          <input type="text" v-model="name" placeholder="请输入账户" class="login-input">
+        </div>
+        <div class="mb20 bb-color">
+          <input type="password" v-model="pwd" placeholder="请输入密码" class="login-input">
+        </div>
+        <el-button type="primary" round @click="login">登录</el-button>
       </div>
-      <div class="mb20 bb-color">
-        <input type="password" v-model="pwd" placeholder="请输入密码" class="login-input">
+      <div class="change-bg">
+        <el-button @click="changeBg = 0" :style="{'color':changeBg==0?'#000':'#fff'}">动态</el-button>
+        <el-button @click="changeBg = 1" :style="{'color':changeBg==0?'#000':'#fff'}">星空</el-button>
       </div>
-      <el-button type="primary" round @click="login">登录</el-button>
     </div>
   </div>
 </template>
@@ -29,7 +37,8 @@ export default {
         count: 500 // 线条数量500
       },
       name: '',
-      pwd: ''
+      pwd: '',
+      changeBg: 0,// 切换登录背景图  动态图过于消耗内存
     }
   },
   methods: {
