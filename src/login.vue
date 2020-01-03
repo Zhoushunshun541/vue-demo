@@ -55,6 +55,12 @@ export default {
             message: response.data.message,
             type: 'success'
           })
+          this.$router.push({path: '/success'})
+        } else {
+          this.$message({
+            message: response.data.message,
+            type: 'error'
+          })
         }
       })
     }
