@@ -55,7 +55,7 @@ export default {
             message: response.data.message,
             type: 'success'
           })
-          this.$router.push({path: '/success'})
+          this.$router.push({path: '/setting/echart'})
         } else {
           this.$message({
             message: response.data.message,

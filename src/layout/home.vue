@@ -1,20 +1,20 @@
 <template>
   <div class="base-layout">
     <el-container>
-    <el-header>
-      <web-header></web-header>
-    </el-header>
-    <el-container>
-      <el-aside :width="leftP">
-        <web-aside @childAside="changeRouter"></web-aside>
-      </el-aside>
-      <!-- 拖动分割线 -->
-      <div class="drag" @mousedown="touchstart"></div>
-      <el-main>
-        <router-view></router-view>
-      </el-main>
+      <el-header>
+        <web-header></web-header>
+      </el-header>
+      <el-container>
+        <el-aside :width="leftP">
+          <web-aside></web-aside>
+        </el-aside>
+        <!-- 拖动分割线 -->
+        <div class="drag" @mousedown="touchstart"></div>
+        <el-main>
+          <router-view></router-view>
+        </el-main>
+      </el-container>
     </el-container>
-  </el-container>
   </div>
 </template>
 <script>
@@ -40,7 +40,7 @@ export default {
       // 算出鼠标相对元素的位置
       let disX = e.clientX - odiv.offsetLeft
       let disY = e.clientY - odiv.offsetTop
-      document.onmousemove = (e) => {       // 鼠标按下并移动的事件
+      document.onmousemove = (e) => { // 鼠标按下并移动的事件
         // 用鼠标的位置减去鼠标相对元素的位置，得到元素的位置
         let left = e.clientX - disX
         let top = e.clientY - disY
@@ -55,10 +55,6 @@ export default {
         document.onmousemove = null
         document.onmouseup = null
       }
-    },
-    // 路由跳转
-    changeRouter (data) {
-
     }
   },
   // 监听浏览器大小变化
@@ -73,15 +69,15 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-  .drag{
-    position: absolute;
-    left: 200px;
-    cursor: move;
-    width: 2px;
-    height: 500px;
-    background: #000;
-  }
-  .el-main{
-    background: #f1f1f1;
-  }
+.drag {
+  position: absolute;
+  left: 200px;
+  cursor: move;
+  width: 2px;
+  height: 500px;
+  background: #000;
+}
+.el-main {
+  background: #f1f1f1;
+}
 </style>

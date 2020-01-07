@@ -7,7 +7,10 @@ import jquery from 'jquery'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import echarts from 'echarts'
+import Video from 'video.js'
+import 'video.js/dist/video-js.css'
 
+Vue.prototype.$video = Video
 Vue.prototype.$echarts = echarts
 Vue.use(ElementUI)
 window.$ = window.jQuery = jquery

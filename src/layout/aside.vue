@@ -1,11 +1,10 @@
 <template>
   <div class="web-aside">
-    <div
-      v-for="(item,index) in list"
-      :key="index"
-      class="item"
-      :class="item.acitve?'active':''"
-      @click="chooseItem(index,item)">
+    <div v-for="(item,index) in list"
+         :key="index"
+         class="item"
+         :class="item.acitve?'active':''"
+         @click="chooseItem(index,item)">
       {{item.name}}
     </div>
   </div>
@@ -18,19 +17,19 @@ export default {
       list: [{
         name: '图表',
         acitve: true,
-        path: 'success'
+        path: '/setting/echart'
       }, {
         name: '拖动',
         acitve: false,
-        path: 'success'
+        path: '/setting'
       }, {
         name: '设置',
         acitve: false,
-        path: 'success'
+        path: '/setting'
       }, {
-        name: '呵呵哒',
+        name: '视频',
         acitve: false,
-        path: 'success'
+        path: '/setting/video'
       }] // 菜单列表
     }
   },
@@ -38,27 +37,32 @@ export default {
     chooseItem (index, item) {
       this.list.forEach((res, num) => {
         if (index == num) {
+          console.log(res.path)
           res.acitve = true
           this.$emit('childAside', res.path)
+          this.$router.push({'path': res.path})
         } else {
           res.acitve = false
         }
       })
+    },
+    changeRouter () {
+
     }
   }
 }
 </script>
 
 <style lang="less" scoped>
-.web-aside{
-  .item{
+.web-aside {
+  .item {
     height: 40px;
     line-height: 40px;
-    &:hover{
+    &:hover {
       background: #f1f1f1;
     }
   }
-  .active{
+  .active {
     background: #f1f1f1;
   }
 }

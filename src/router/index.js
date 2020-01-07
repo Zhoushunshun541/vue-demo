@@ -19,12 +19,17 @@ export default new Router({
       component: (resolve) => require(['../login'], resolve)
     },
     {
-      path: '/success',
-      name: 'success',
+      path: '/setting',
+      name: 'setting',
       component: layout,
       children: [{
-        path: '/success',
-        component: (resolve) => require(['../views/success.vue'], resolve)
+        path: 'echart',
+        name: 'echart',
+        component: (resolve) => require(['../views/echart.vue'], resolve)
+      }, {
+        path: 'video',
+        name: 'video',
+        component: (resolve) => require(['../views/video.vue'], resolve)
       }]
     }
   ]
