@@ -13,7 +13,7 @@
           <input type="password" v-model="passport" placeholder="请输入密码" class="login-input">
         </div>
         <!-- element组件的键盘事件需要添加native才可以  原生的不需要 -->
-        <el-button id="idi" type="primary" round  @click="login">登录</el-button>
+        <el-button type="primary" round  @click="login">登录</el-button>
       </div>
       <div class="change-bg">
         <el-button @click="changeBg = 0" :style="{'color':changeBg==0?'#000':'#fff'}">动态</el-button>

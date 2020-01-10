@@ -15,6 +15,7 @@ export default new Vuex.Store({
     del_token (state) {
       state.token = ''
       sessionStorage.removeItem('token')
+      localStorage.removeItem('token')
     }
   }
 })
