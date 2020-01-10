@@ -18,15 +18,18 @@ export default {
         name: '图表',
         acitve: true,
         path: '/setting/echart'
-      }, {
-        name: '拖动',
-        acitve: false,
-        path: '/setting'
-      }, {
-        name: '设置',
-        acitve: false,
-        path: '/setting'
-      }, {
+      },
+      // {
+      //   name: '拖动',
+      //   acitve: false,
+      //   path: '/setting/echart'
+      // },
+      // {
+      //   name: '设置',
+      //   acitve: false,
+      //   path: '/setting/video'
+      // },
+      {
         name: '视频',
         acitve: false,
         path: '/setting/video'
@@ -37,7 +40,6 @@ export default {
     chooseItem (index, item) {
       this.list.forEach((res, num) => {
         if (index == num) {
-          console.log(res.path)
           res.acitve = true
           this.$emit('childAside', res.path)
           this.$router.push({'path': res.path})

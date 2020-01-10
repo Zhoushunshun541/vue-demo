@@ -38,7 +38,8 @@ export default {
       },
       name: '',
       pwd: '',
-      changeBg: 1// 切换登录背景图  动态图过于消耗内存
+      changeBg: 1, // 切换登录背景图  动态图过于消耗内存
+      loginToken: '' // 登录token
     }
   },
   methods: {
@@ -55,6 +56,8 @@ export default {
             message: response.data.message,
             type: 'success'
           })
+          this.loginToken = response.data.data
+          this.$store.commit('set_token', response.data.data)
           this.$router.push({path: '/setting/echart'})
         } else {
           this.$message({

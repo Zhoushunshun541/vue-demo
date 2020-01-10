@@ -1,11 +1,19 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import store from '../store.js'
 import {
   layout
 } from '../layout'
 Vue.use(Router)
 
-export default new Router({
+// 此Router是自己自定义引入暴露出来的，即是自定义的，以下的Router同样是这样
+// 解决两次访问相同路由地址报错
+const originalPush = Router.prototype.push
+Router.prototype.push = function push (location) {
+  return originalPush.call(this, location).catch(err => err)
+}
+
+const routes = new Router({
   mode: 'history',
   routes: [
     {
@@ -34,3 +42,24 @@ export default new Router({
     }
   ]
 })
+// 页面刷新时，重新赋值token
+if (sessionStorage.getItem('token')) {
+  store.commit('set_token', sessionStorage.getItem('token'))
+}
+
+// 路由跳转之前 对下一页  to 所去的路由界面判断   如果是login  就继续  next
+// 如果不是login  就先判断是否有token   有 继续  无 到login
+routes.beforeEach((to, from, next) => {
+  if (to.path === '/login') {
+    next()
+  } else {
+    let token = sessionStorage.getItem('token')
+    if (token === null || token === '') {
+      next('/login')
+    } else {
+      next()
+    }
+  }
+})
+
+export default routes
