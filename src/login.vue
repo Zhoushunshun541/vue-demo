@@ -7,13 +7,13 @@
       <div class="login-model">
         <div class="mb10 login-title" style="color:#fff;">登录</div>
         <div class="mb20 bb-color">
-          <input type="text" v-model="name" placeholder="请输入账户" class="login-input">
+          <input type="text" v-model="username" placeholder="请输入账户" class="login-input">
         </div>
         <div class="mb20 bb-color">
-          <input type="password" v-model="pwd" placeholder="请输入密码" class="login-input">
+          <input type="password" v-model="passport" placeholder="请输入密码" class="login-input">
         </div>
         <!-- element组件的键盘事件需要添加native才可以  原生的不需要 -->
-        <el-button type="primary" round  @click="login">登录</el-button>
+        <el-button id="idi" type="primary" round  @click="login">登录</el-button>
       </div>
       <div class="change-bg">
         <el-button @click="changeBg = 0" :style="{'color':changeBg==0?'#000':'#fff'}">动态</el-button>
@@ -37,17 +37,20 @@ export default {
         opacity: 1, // 透明度
         count: 500 // 线条数量500
       },
-      name: '',
-      pwd: '',
+      username: '',
+      passport: '',
       changeBg: 1, // 切换登录背景图  动态图过于消耗内存
       loginToken: '' // 登录token
     }
   },
   methods: {
     login () {
+      // 使用base64加密   md5加密不可逆 适合注册登录  暂时不做
+      let Base64 = require('js-base64').Base64
+      let passport = Base64.encode(this.passport)
       let params = {
-        name: this.name,
-        pwd: this.pwd
+        username: this.username,
+        passport: passport
       }
       getAllUser({
         ...params

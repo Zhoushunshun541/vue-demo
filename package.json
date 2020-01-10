@@ -21,6 +21,7 @@
     "element-ui": "^2.13.0",
     "express": "^4.17.1",
     "jquery": "^3.4.1",
+    "js-base64": "^2.5.1",
     "video.js": "^7.6.6",
     "vue": "^2.5.2",
     "vue-canvas-nest": "^2.0.0",
