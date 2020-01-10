@@ -12,7 +12,8 @@
         <div class="mb20 bb-color">
           <input type="password" v-model="pwd" placeholder="请输入密码" class="login-input">
         </div>
-        <el-button type="primary" round @click="login">登录</el-button>
+        <!-- element组件的键盘事件需要添加native才可以  原生的不需要 -->
+        <el-button type="primary" round  @click="login">登录</el-button>
       </div>
       <div class="change-bg">
         <el-button @click="changeBg = 0" :style="{'color':changeBg==0?'#000':'#fff'}">动态</el-button>
@@ -66,6 +67,15 @@ export default {
           })
         }
       })
+    }
+  },
+  created () {
+    document.onkeydown = (e) => {
+      var key = window.event.keyCode
+      // 13是enter键盘事件
+      if (key == 13) {
+        this.login()
+      }
     }
   }
 }
