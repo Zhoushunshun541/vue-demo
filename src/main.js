@@ -36,11 +36,9 @@ Axios.interceptors.request.use(
     if (store.state.token) {
       config.headers.common['Authentication-Token'] = store.state.token
     }
-
     return config
   },
   error => {
-    // 对请求错误做些什么
     return Promise.reject(error)
   }
 )

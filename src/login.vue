@@ -62,7 +62,8 @@ export default {
           })
           this.loginToken = response.data.data
           this.$store.commit('set_token', response.data.data)
-          this.$router.push({path: '/setting/echart'})
+          window.location.href = 'http://localhost:8081/setting/echart'
+          // this.$router.push({path: '/setting/echart'})
         } else {
           this.$message({
             message: response.data.message,

@@ -1,11 +1,14 @@
 <template>
   <div class="success">
     <div id="lineEchart"
-        style="width:100%;height:500px;"></div>
+      style="width:100%;height:500px;">
+    </div>
+    <button @click="testName">接口测试</button>
   </div>
 </template>
 
 <script>
+import {testName} from '../api/api'
 export default {
   name: 'echart',
   data () {
@@ -120,6 +123,10 @@ export default {
       }
       var myChart = this.$echarts.init(document.getElementById('lineEchart'))
       myChart.setOption(option)
+    },
+    testName () {
+      testName().then(res => {
+      })
     }
   }
 }
