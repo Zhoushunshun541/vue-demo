@@ -5,7 +5,7 @@
         <vue-canvas-nest :config='bgConfig'></vue-canvas-nest>
       </template>
       <div class="login-model">
-        <div class="mb10 login-title" style="color:#fff;">登录</div>
+        <div class="mb10 login-title" style="color:#fff;">梦入江南</div>
         <div class="mb20 bb-color">
           <input type="text" v-model="username" placeholder="请输入账户" class="login-input">
         </div>
