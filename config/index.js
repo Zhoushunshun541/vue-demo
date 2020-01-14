@@ -14,9 +14,6 @@ module.exports = {
       '/api': {
         target: 'http://localhost:8080',
         changeOrigin: true,
-        headers: {
-          // cookie: 'k12_tob=eacff5e08ec2fc2fe992a12b5b735a6a1e1bb7fc'
-        }
       }
     },
 

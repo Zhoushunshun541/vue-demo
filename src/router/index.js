@@ -43,8 +43,8 @@ const routes = new Router({
   ]
 })
 // 页面刷新时，重新赋值token
-if (store.state.token) {
-  store.commit('set_token', store.state.token)
+if (sessionStorage.getItem('token')) {
+  store.commit('set_token', sessionStorage.getItem('token'))
 }
 
 // 路由跳转之前 对下一页  to 所去的路由界面判断   如果是login  就继续  next
@@ -53,7 +53,7 @@ routes.beforeEach((to, from, next) => {
   if (to.path === '/login') {
     next()
   } else {
-    let token = store.state.token
+    let token = sessionStorage.getItem('token')
     if (token === null || token === '') {
       next('/login')
     } else {

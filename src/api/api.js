@@ -6,7 +6,7 @@ var instance = axios.create({
   timeout: 10000
 })
 
-axios.defaults.headers.common['Authentication-Token'] = store.state.token
+axios.defaults.headers.common['token'] = store.state.token
 
 export const getAllUser = params => {
   return instance.post('/login/login', qs.stringify(params))
