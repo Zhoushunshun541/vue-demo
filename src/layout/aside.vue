@@ -19,11 +19,11 @@ export default {
         acitve: true,
         path: '/setting/echart'
       },
-      // {
-      //   name: '拖动',
-      //   acitve: false,
-      //   path: '/setting/echart'
-      // },
+      {
+        name: '动态设置图表',
+        acitve: false,
+        path: '/setting/dynamicEchart'
+      },
       // {
       //   name: '设置',
       //   acitve: false,

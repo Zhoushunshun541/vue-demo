@@ -58,7 +58,6 @@ export default {
         ...params
       }).then(response => {
         if (response.data.success === 'success') {
-          this.loading = false
           this.$message({
             message: response.data.message,
             type: 'success'

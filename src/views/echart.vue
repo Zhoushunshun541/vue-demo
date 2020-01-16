@@ -1,8 +1,50 @@
 <template>
-  <div class="success">
-    <div id="lineEchart"
-      style="width:100%;height:500px;">
-    </div>
+  <div class="echart">
+    <el-button type="primary"
+               @click="selectEcharts = true">请选择</el-button>
+    <el-dialog title="自定义设置"
+               :visible=false
+               width="1000px">
+      <div class="step">
+        <el-steps :active="stepActive"
+                  finish-status="success"
+                  align-center>
+          <el-step title="选择表格类型"></el-step>
+          <el-step title="设置数据"></el-step>
+          <el-step title="完成"></el-step>
+        </el-steps>
+      </div>
+      <div class="select-echart"
+           v-if="stepActive == 0">
+        <div class="line-echart ac fl mr15"
+             style="width:305px;height:220px"
+             :class="selectEchart == 0?'active':''"
+             @click="selectEchartOption(0)">
+          <div class="active"
+               v-if="selectEchart == 0">✓</div>
+        </div>
+        <div class="bar-echart ac fl mr15"
+             style="width:305px;height:220px"
+             :class="selectEchart == 1?'active':''"
+             @click="selectEchartOption(1)">
+          <div class="active"
+               v-if="selectEchart == 1">✓</div>
+        </div>
+        <div class="pie-echart ac fl"
+             style="width:305px;height:220px"
+             :class="selectEchart == 2?'active':''"
+             @click="selectEchartOption(2)">
+          <div class="active"
+               v-if="selectEchart == 2">✓</div>
+        </div>
+      </div>
+      <div v-if="stepActive == 1">
+      </div>
+      <div slot="footer">
+        <el-button type="primary"
+                   @click="stepActive+=1">下一步</el-button>
+      </div>
+    </el-dialog>
     <button @click="testName">接口测试</button>
   </div>
 </template>
@@ -12,121 +54,34 @@ import {testName} from '../api/api'
 export default {
   name: 'echart',
   data () {
-    return {}
+    return {
+      selectEcharts: false, // 模态框开关
+      selectEchart: -1, // 0:折线图 1: 柱状图 2:饼图
+      stepActive: 0 // 步骤条
+    }
   },
   mounted () {
     this.init()
   },
   methods: {
     init () {
-      var option = {
-        title: {
-          text: '某地区蒸发量和降水量',
-          subtext: '纯属虚构'
-        },
-        tooltip: {
-          trigger: 'axis'
-        },
-        legend: {
-          data: ['蒸发量', '降水量']
-        },
-        toolbox: {
-          show: true,
-          feature: {
-            dataView: { show: true, readOnly: false },
-            magicType: { show: true, type: ['line', 'bar'] },
-            restore: { show: true },
-            saveAsImage: { show: true }
-          }
-        },
-        calculable: true,
-        xAxis: [
-          {
-            type: 'category',
-            data: [
-              '1月',
-              '2月',
-              '3月',
-              '4月',
-              '5月',
-              '6月',
-              '7月',
-              '8月',
-              '9月',
-              '10月',
-              '11月',
-              '12月'
-            ]
-          }
-        ],
-        yAxis: [
-          {
-            type: 'value'
-          }
-        ],
-        series: [
-          {
-            name: '蒸发量',
-            type: 'bar',
-            data: [
-              2.0,
-              4.9,
-              7.0,
-              23.2,
-              25.6,
-              76.7,
-              135.6,
-              162.2,
-              32.6,
-              20.0,
-              6.4,
-              3.3
-            ],
-            markPoint: {
-              data: [
-                { type: 'max', name: '最大值' },
-                { type: 'min', name: '最小值' }
-              ]
-            },
-            markLine: {
-              data: [{ type: 'average', name: '平均值' }]
-            }
-          },
-          {
-            name: '降水量',
-            type: 'bar',
-            data: [
-              2.6,
-              5.9,
-              9.0,
-              26.4,
-              28.7,
-              70.7,
-              175.6,
-              182.2,
-              48.7,
-              18.8,
-              6.0,
-              2.3
-            ],
-            markPoint: {
-              data: [
-                { name: '年最高', value: 182.2, xAxis: 7, yAxis: 183 },
-                { name: '年最低', value: 2.3, xAxis: 11, yAxis: 3 }
-              ]
-            },
-            markLine: {
-              data: [{ type: 'average', name: '平均值' }]
-            }
-          }
-        ]
-      }
-      var myChart = this.$echarts.init(document.getElementById('lineEchart'))
-      myChart.setOption(option)
     },
     testName () {
       testName().then(res => {
       })
+    },
+    selectEchartOption (val) {
+      switch (val) {
+        case 0:
+          this.selectEchart = 0
+          break
+        case 1:
+          this.selectEchart = 1
+          break
+        case 2:
+          this.selectEchart = 2
+          break
+      }
     }
   }
 }

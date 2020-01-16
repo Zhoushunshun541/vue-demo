@@ -1,0 +1,38 @@
+.echart {
+  height: calc(100vh - 100px);
+}
+.echart .select-echart {
+  margin: 0 auto;
+}
+.echart .select-echart .line-echart {
+  background: url('../assets/lineEchart.png');
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+.echart .select-echart .bar-echart {
+  background: url('../assets/barEchart.png');
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+.echart .select-echart .pie-echart {
+  background: url('../assets/pieEchart.png');
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+.echart .select-echart .ac {
+  position: relative;
+}
+.echart .select-echart .ac .active {
+  line-height: 12px;
+  color: #fff;
+  border: 2px #67C23A solid;
+  background: #67C23A;
+  width: 12px;
+  height: 12px;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+.echart .select-echart .active {
+  border: 2px #67C23A solid;
+}

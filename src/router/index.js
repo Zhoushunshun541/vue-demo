@@ -38,6 +38,10 @@ const routes = new Router({
         path: 'video',
         name: 'video',
         component: (resolve) => require(['../views/video.vue'], resolve)
+      }, {
+        path: 'dynamicEchart',
+        name: 'dynamicEchart',
+        component: (resolve) => require(['../views/dynamicEchart.vue'], resolve)
       }]
     }
   ]

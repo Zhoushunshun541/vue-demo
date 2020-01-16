@@ -74,10 +74,11 @@ export default {
   left: 200px;
   cursor: move;
   width: 2px;
-  height: 500px;
+  height: calc(100vh - 60px);
   background: #000;
 }
 .el-main {
+  padding: 0;
   background: #f1f1f1;
 }
 </style>
