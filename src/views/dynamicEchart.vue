@@ -12,7 +12,8 @@
       </custom>
     </div>
     <dynamic-Modal
-      
+      :openModel='customModule1'
+      @closeModel='closeModel'
       ></dynamic-Modal>
   </div>
 </template>
@@ -44,6 +45,9 @@ export default {
   },
   methods: {
     openModel (val) {
+      this.customModule1 = val
+    },
+    closeModel (val) {
       this.customModule1 = val
     }
   }

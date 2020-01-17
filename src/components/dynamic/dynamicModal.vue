@@ -6,6 +6,7 @@
                :show-close='false'>
       <div slot="title">
         <div class="fl"
+             @click="closeModel"
              style="font-weight:600;color:#909399;margin-left:40px;">返回</div>
         <div class="fr">
           <el-button type="primary"
@@ -21,14 +22,13 @@
               <div style="overflow: hidden;">
                 <i class="el-icon-menu fl mt5 mr10"></i>
                 <span class="fl"
-                      style="color:#fff;font-size:22px;line-height:30px;display:block">模块未命名</span>
+                      style="color:#fff;font-size:22px;line-height:30px;display:block">{{moudleName}}</span>
               </div>
               <div class="divider mt15 mb20"></div>
               <div class="chart-instance">
-                <template v-if="echartInit">
-                  <div id="echartExample"></div>
-                </template>
-                <template v-else>
+                <!-- <template v-if="echartInit"> -->
+                  <div id="echartExample" :style="{display:echartInit?'block':'none'}"></div>
+                <template v-if="!echartInit">
                   <div class="fl"
                        style="color:rgba(255,255,255,0.3);font-size:21px;">{{chartType}}</div>
                   <div class="clearfix"></div>
@@ -183,7 +183,7 @@ export default {
   props: {
     openModel: {
       type: Boolean,
-      default: true
+      default: false
     },
     chartType: {
       type: String,
@@ -192,6 +192,7 @@ export default {
   },
   data () {
     return {
+      moudleName: '模块未命名',
       myEchart: '',
       echartInit: false,
       echartName: '',
@@ -222,7 +223,8 @@ export default {
         check: false,
         color: '#48DD7C'
       }], // 增加度量项数据
-      echartOptions: {
+      // 堆积柱状图数据
+      barOptions: {
         tooltip: {
           trigger: 'axis',
           axisPointer: { // 坐标轴指示器，坐标轴触发有效
@@ -247,6 +249,45 @@ export default {
         },
         series: [
         ]
+      },
+      barOptions1: {
+        color: ['#003366', '#006699', '#4cabce', '#e5323e'],
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            type: 'shadow'
+          }
+        },
+        legend: {
+          data: ['Forest', 'Steppe', 'Desert', 'Wetland']
+        },
+        toolbox: {
+          show: true,
+          orient: 'vertical',
+          left: 'right',
+          top: 'center',
+          feature: {
+            mark: {show: true},
+            dataView: {show: true, readOnly: false},
+            magicType: {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+            restore: {show: true},
+            saveAsImage: {show: true}
+          }
+        },
+        xAxis: [
+          {
+            type: 'category',
+            axisTick: {show: false},
+            data: ['2012', '2013', '2014', '2015', '2016']
+          }
+        ],
+        yAxis: [
+          {
+            type: 'value'
+          }
+        ],
+        series: [
+        ]
       }
     }
   },
@@ -268,29 +309,23 @@ export default {
       })
       if (this.tableData.length > 0) {
         this.echartInit = true
+        // 生成图表
+        setTimeout(this.updateChart(), 500)
       }
       this.metricModel = false
+      // this.updateChart()
     },
     // 更新echart图表
     updateChart () {
-      // {
-      //   name: '直接访问',
-      //   type: 'bar',
-      //   stack: '总量',
-      //   label: {
-      //     show: true
-      //   },
-      //   data: [320, 302, 301, 334, 390, 330, 320]
-      // }
-      this.echartOptions.series = []
+      if (this.echartName != '') {
+        this.moudleName = this.echartName
+      }
+      this.barOptions1.series = []
+      this.barOptions1.legend.data = []
       this.tableData.forEach(res => {
         let series = {
           name: '',
           type: 'bar',
-          stack: '总量',
-          label: {
-            show: true
-          },
           color: '',
           data: []
         }
@@ -298,25 +333,38 @@ export default {
         series.name = res.name
         series.data = res.data
         series.color = res.color
-        this.echartOptions.series.push(series)
-        this.echartOptions.legend.data.push(res.name)
+        this.barOptions1.series.push(series)
+        this.barOptions1.legend.data.push(res.name)
       })
-      console.log(this.echartOptions)
       this.myEchart = this.$echarts.init(document.getElementById('echartExample'))
-      this.myEchart.setOption(this.echartOptions)
+      this.myEchart.clear()
+      this.myEchart.setOption(this.barOptions1)
     },
     // 更改颜色
     changeColor (index, row, val) {
       row[index].color = val
+      // 生成图表
+      this.updateChart()
     },
     // 删除当前行
     deleteRow (index, rows) {
       this.optionData.forEach(res => {
-        if (res.name = rows[index].name) {
+        if (res.name == rows[index].name) {
           res.check = false
         }
       })
       rows.splice(index, 1)
+      // 生成图表
+      this.updateChart()
+    },
+    // 关闭模态框
+    closeModel () {
+      this.moudleName = '模块未命名'
+      this.echartName = ''
+      this.echartInit = false
+      this.tableData = []
+      this.myEchart.clear()
+      this.$emit('closeModel', false)
     }
   }
 }
