@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import store from '../store.js'
+import Axios from 'axios'
 import {
   layout
 } from '../layout'
@@ -19,12 +20,20 @@ const routes = new Router({
     {
       path: '/',
       name: 'index',
-      component: (resolve) => require(['../login'], resolve)
+      component: (resolve) => require(['../login'], resolve),
+      meta: {
+        title: '登录',
+        keepAlive: false // 不需要被缓存
+      }
     },
     {
       path: '/login',
       name: 'login',
-      component: (resolve) => require(['../login'], resolve)
+      component: (resolve) => require(['../login'], resolve),
+      meta: {
+        title: '登录',
+        keepAlive: false // 不需要被缓存
+      }
     },
     {
       path: '/setting',
@@ -47,19 +56,23 @@ const routes = new Router({
   ]
 })
 // 页面刷新时，重新赋值token
-if (sessionStorage.getItem('token')) {
-  store.commit('set_token', sessionStorage.getItem('token'))
+if (localStorage.getItem('token')) {
+  store.commit('set_token', localStorage.getItem('token'))
 }
 
 // 路由跳转之前 对下一页  to 所去的路由界面判断   如果是login  就继续  next
 // 如果不是login  就先判断是否有token   有 继续  无 到login
 routes.beforeEach((to, from, next) => {
-  if (to.path === '/login') {
+  if (to.path === '/login' || to.path === '/') {
+    store.commit('del_token')
     next()
   } else {
-    let token = sessionStorage.getItem('token')
+    let token = localStorage.getItem('token')
     if (token === null || token === '') {
-      next('/login')
+      next({
+        path: '/login',
+        query: {redirect: to.fullPath}
+      })
     } else {
       next()
     }

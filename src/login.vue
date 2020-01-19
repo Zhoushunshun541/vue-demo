@@ -57,19 +57,20 @@ export default {
       getAllUser({
         ...params
       }).then(response => {
+        let _this = this;
         if (response.data.success === 'success') {
-          this.$message({
+          _this.$message({
             message: response.data.message,
             type: 'success'
           })
-          this.loginToken = response.data.data
-          this.$store.commit('set_token', response.data.data)
+          _this.loginToken = response.data.data
+          _this.$store.commit('set_token', response.data.data)
           // window.location.href = 'http://localhost:8081/setting/echart'
-          window.location.href = 'http://139.196.33.88:8088/setting/echart'
-          // this.$router.push({path: '/setting/echart'})
+          // window.location.href = 'http://139.196.33.88:8088/setting/echart'
+          _this.$router.push({path: '/setting/echart'})
         } else {
-          this.loading = false
-          this.$message({
+          _this.loading = false
+          _this.$message({
             message: response.data.message,
             type: 'error'
           })

@@ -157,7 +157,7 @@
                width="910px"
                custom-class="add-metric"
                :center="false">
-      <div v-for="(item, index) in optionData"
+      <div v-for="(item, index) in pieOptionData"
            :key="index"
            style="overflow:hidden;">
         <div class="fl"
@@ -222,7 +222,32 @@ export default {
         data: [11, 22, 32, 12, 321, 23, 21],
         check: false,
         color: '#48DD7C'
-      }], // 增加度量项数据
+      }], // 增加柱状图度量项数据
+      pieOptionData: [{
+        name: '学校所处区域是否是老城区',
+        value: 11,
+        data: [{value: 11, itemStyle: {color: '#FFA81E'}, name: '学校所处区域是否是老城区'}],
+        check: false,
+        color: '#FFA81E'
+      }, {
+        name: '小学部当年班级总数',
+        value: 23,
+        data: [{value: 23, itemStyle: {color: '#FF4A67'}, name: '小学部当年班级总数'}],
+        check: false,
+        color: '#FF4A67'
+      }, {
+        name: '小学部当年年级数',
+        value: 12,
+        data: [{value: 12, itemStyle: {color: '#62D1FA'}, name: '小学部当年年级数'}],
+        check: false,
+        color: '#62D1FA'
+      }, {
+        name: '小学在校学生总数',
+        value: 32,
+        data: [{value: 32, itemStyle: {color: '#48DD7C'}, name: '小学在校学生总数'}],
+        check: false,
+        color: '#48DD7C'
+      }],
       // 堆积柱状图数据
       barOptions: {
         tooltip: {
@@ -232,7 +257,10 @@ export default {
           }
         },
         legend: {
-          data: []
+          data: [],
+          textStyle: {
+            color: '#fff'
+          }
         },
         grid: {
           left: '3%',
@@ -259,7 +287,10 @@ export default {
           }
         },
         legend: {
-          data: ['Forest', 'Steppe', 'Desert', 'Wetland']
+          data: ['Forest', 'Steppe', 'Desert', 'Wetland'],
+          textStyle: {
+            color: '#fff'
+          }
         },
         toolbox: {
           show: true,
@@ -288,13 +319,53 @@ export default {
         ],
         series: [
         ]
+      },
+      pieOption: {
+        title: {
+          text: '某站点用户访问来源',
+          subtext: '纯属虚构',
+          left: 'center',
+          textStyle: {
+            color: '#fff'
+          }
+        },
+        tooltip: {
+          trigger: 'item',
+          formatter: '{a} <br/>{b} : {c} ({d}%)'
+        },
+        legend: {
+          orient: 'vertical',
+          left: 'left',
+          color: '#fff',
+          data: [],
+          textStyle: {
+            color: '#fff'
+          }
+        },
+        series: [
+          {
+            name: '访问来源',
+            type: 'pie',
+            radius: '55%',
+            center: ['50%', '60%'],
+            data: [
+            ],
+            emphasis: {
+              itemStyle: {
+                shadowBlur: 10,
+                shadowOffsetX: 0,
+                shadowColor: 'rgba(0, 0, 0, 0.5)'
+              }
+            }
+          }
+        ]
       }
     }
   },
   methods: {
     // 更新表格数据
     updataTable () {
-      this.optionData.forEach(res => {
+      this.pieOptionData.forEach(res => {
         if (res.check) {
           let num = 0
           this.tableData.forEach(item => {
@@ -320,35 +391,37 @@ export default {
       if (this.echartName != '') {
         this.moudleName = this.echartName
       }
-      this.barOptions1.series = []
-      this.barOptions1.legend.data = []
+      this.pieOption.series[0].data = []
+      this.pieOption.legend.data = []
       this.tableData.forEach(res => {
-        let series = {
-          name: '',
-          type: 'bar',
-          color: '',
-          data: []
-        }
+        // let series = {
+        //   type: 'pie',
+        //   radius: '55%',
+        //   center: ['50%', '60%'],
+        //   data: []
+        // }
 
-        series.name = res.name
-        series.data = res.data
-        series.color = res.color
-        this.barOptions1.series.push(series)
-        this.barOptions1.legend.data.push(res.name)
+        // series.name = res.name
+        // series.data.push(res.data[0])
+        // series.color = res.color
+        this.pieOption.series[0].data.push(res.data[0])
+        this.pieOption.legend.data.push(res.name)
       })
+      console.log(this.pieOption)
       this.myEchart = this.$echarts.init(document.getElementById('echartExample'))
       this.myEchart.clear()
-      this.myEchart.setOption(this.barOptions1)
+      this.myEchart.setOption(this.pieOption)
     },
     // 更改颜色
     changeColor (index, row, val) {
       row[index].color = val
+      row[index].data[0].itemStyle.color = val
       // 生成图表
       this.updateChart()
     },
     // 删除当前行
     deleteRow (index, rows) {
-      this.optionData.forEach(res => {
+      this.pieOptionData.forEach(res => {
         if (res.name == rows[index].name) {
           res.check = false
         }
