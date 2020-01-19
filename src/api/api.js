@@ -4,7 +4,6 @@ var instance = axios.create({
   baseURL: process.env.BASE_API,
   timeout: 10000
 })
-
 instance.defaults.headers.common['Token'] = window.localStorage.getItem('token')
 
 // 添加请求拦截器

@@ -15,7 +15,7 @@ Router.prototype.push = function push (location) {
 }
 
 const routes = new Router({
-  mode: 'history',
+  mode: 'hash',
   routes: [
     {
       path: '/',
