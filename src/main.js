@@ -11,7 +11,6 @@ import Video from 'video.js'
 import Axios from 'axios'
 import store from './store'
 import 'video.js/dist/video-js.css'
-import '../static/css/font.css'
 
 Vue.prototype.$video = Video
 Vue.prototype.$store = store
