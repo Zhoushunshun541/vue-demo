@@ -64,7 +64,8 @@ export default {
           })
           this.loginToken = response.data.data
           this.$store.commit('set_token', response.data.data)
-          window.location.href = 'http://localhost:8081/setting/echart'
+          // window.location.href = 'http://localhost:8081/setting/echart'
+          window.location.href = 'http://139.196.33.88:8088/setting/echart'
           // this.$router.push({path: '/setting/echart'})
         } else {
           this.loading = false
