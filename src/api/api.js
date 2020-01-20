@@ -1,7 +1,7 @@
 import qs from 'qs'
 import axios from 'axios'
 var instance = axios.create({
-  baseURL: process.env.BASE_API,
+  baseURL: '/',
   timeout: 10000
 })
 instance.defaults.headers.common['Token'] = window.localStorage.getItem('token')
@@ -38,9 +38,9 @@ instance.interceptors.response.use(
   }
 )
 export const getAllUser = params => {
-  return instance.post('/login/login', qs.stringify(params))
+  return instance.post('/api/login/login', qs.stringify(params))
 }
 
 export const testName = params => {
-  return instance.post('/login/testName', qs.stringify(params))
+  return instance.post('/api/login/testName', qs.stringify(params))
 }
