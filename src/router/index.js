@@ -14,7 +14,6 @@ Router.prototype.push = function push (location) {
 }
 
 const routes = new Router({
-  base: '/opt/web/vue-demo/dist/',
   mode: 'history',
   routes: [
     {
