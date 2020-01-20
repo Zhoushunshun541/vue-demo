@@ -54,6 +54,23 @@ const routes = new Router({
     }
   ]
 })
+
+routes.onError((err) => {
+  const pattern = /Loading chunk (\d)+ failed/g
+  const isChunkLoadFailed = err.message.match(pattern)
+  if (isChunkLoadFailed) {
+    let chunkBool = sessionStorage.getItem('chunkError')
+    let nowTimes = Date.now()
+    if (chunkBool === null || chunkBool && nowTimes - parseInt(chunkBool) > 60000) { // 路由跳转报错,href手动跳转
+      sessionStorage.setItem('chunkError', 'reload')
+      const targetPath = routes.history.pending.fullPath
+      window.location.href = window.location.origin + targetPath
+    } else if (chunkBool === 'reload') { // 手动跳转后依然报错,强制刷新
+      sessionStorage.setItem('chunkError', Date.now())
+      window.location.reload(true)
+    }
+  }
+})
 // 页面刷新时，重新赋值token
 if (localStorage.getItem('token')) {
   store.commit('set_token', localStorage.getItem('token'))
