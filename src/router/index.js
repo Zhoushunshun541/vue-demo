@@ -39,15 +39,15 @@ const routes = new Router({
       name: 'setting',
       component: layout,
       children: [{
-        path: '/echart',
+        path: '/setting/echart',
         name: 'echart',
         component: (resolve) => require(['../views/echart.vue'], resolve)
       }, {
-        path: '/video',
+        path: '/setting/video',
         name: 'video',
         component: (resolve) => require(['../views/video.vue'], resolve)
       }, {
-        path: '/dynamicEchart',
+        path: '/setting/dynamicEchart',
         name: 'dynamicEchart',
         component: (resolve) => require(['../views/dynamicEchart.vue'], resolve)
       }]
