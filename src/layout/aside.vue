@@ -41,7 +41,6 @@ export default {
       this.list.forEach((res, num) => {
         if (index == num) {
           res.acitve = true
-          this.$emit('childAside', res.path)
           this.$router.push({'path': res.path})
         } else {
           res.acitve = false
