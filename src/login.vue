@@ -67,7 +67,7 @@ export default {
           _this.$store.commit('set_token', response.data.data)
           // window.location.href = 'http://localhost:8081/setting/echart'
           // window.location.href = 'http://139.196.33.88:8088/setting/echart'
-          _this.$router.push({path: '/setting/echart'})
+          _this.$router.push({path: '/echart'})
         } else {
           _this.loading = false
           _this.$message({

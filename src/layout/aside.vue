@@ -17,12 +17,12 @@ export default {
       list: [{
         name: '图表',
         acitve: true,
-        path: '/setting/echart'
+        path: '/echart'
       },
       {
         name: '动态设置图表',
         acitve: false,
-        path: '/setting/dynamicEchart'
+        path: '/dynamicEchart'
       },
       // {
       //   name: '设置',
@@ -32,7 +32,7 @@ export default {
       {
         name: '视频',
         acitve: false,
-        path: '/setting/video'
+        path: '/video'
       }] // 菜单列表
     }
   },
