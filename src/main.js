@@ -8,7 +8,7 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import echarts from 'echarts'
 import Video from 'video.js'
-import store from './store'
+import store from './store.js'
 import 'video.js/dist/video-js.css'
 
 Vue.prototype.$video = Video
@@ -22,6 +22,7 @@ Vue.config.productionTip = false
 new Vue({
   el: '#app',
   router,
+  store: store,
   components: { App },
   template: '<App/>'
 })

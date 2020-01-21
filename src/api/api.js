@@ -1,5 +1,6 @@
 import qs from 'qs'
 import axios from 'axios'
+import store from '../store'
 var instance = axios.create({
   baseURL: '/',
   timeout: 10000
@@ -13,7 +14,6 @@ instance.interceptors.request.use(
     // 判断是否存在token，如果存在将每个页面header都添加token
     // if (store.state.token) {
     config.headers.common['Token'] = window.localStorage.getItem('token')
-    console.log(config)
     // }
     return config
   },
@@ -21,20 +21,20 @@ instance.interceptors.request.use(
     return Promise.reject(error)
   }
 )
-// http response 拦截器
+// 添加回应拦截器
 instance.interceptors.response.use(
   response => {
     return response
   },
   error => {
     if (error.response) {
-      console.log(error)
       switch (error.response.status) {
         case 401:
-          this.$store.commit('del_token')
+          store.commit('del_token')
+          break
       }
     }
-    return Promise.reject(error.response.data)
+    return Promise.reject(error.response)
   }
 )
 export const getAllUser = params => {

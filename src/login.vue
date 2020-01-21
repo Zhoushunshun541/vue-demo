@@ -57,7 +57,7 @@ export default {
       getAllUser({
         ...params
       }).then(response => {
-        let _this = this;
+        let _this = this
         if (response.data.success === 'success') {
           _this.$message({
             message: response.data.message,
@@ -69,12 +69,14 @@ export default {
           // window.location.href = 'http://139.196.33.88:8088/setting/echart'
           _this.$router.push({path: '/echart'})
         } else {
-          _this.loading = false
-          _this.$message({
-            message: response.data.message,
-            type: 'error'
-          })
         }
+      }).catch(error => {
+        console.log(error)
+        this.loading = false
+        this.$message({
+          message: error.data.message,
+          type: 'error'
+        })
       })
     }
   },

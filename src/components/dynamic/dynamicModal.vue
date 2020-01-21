@@ -407,7 +407,6 @@ export default {
         this.pieOption.series[0].data.push(res.data[0])
         this.pieOption.legend.data.push(res.name)
       })
-      console.log(this.pieOption)
       this.myEchart = this.$echarts.init(document.getElementById('echartExample'))
       this.myEchart.clear()
       this.myEchart.setOption(this.pieOption)
