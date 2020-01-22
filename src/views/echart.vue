@@ -2,8 +2,10 @@
   <div class="echart">
     <el-button type="primary"
                @click="selectEcharts = true">请选择</el-button>
+    <button @click="testName">接口测试</button>
+    <input type="file" @change="fileUpload" id="upload"></input>
     <el-dialog title="自定义设置"
-               :visible=false
+               :visible='selectEcharts'
                width="1000px">
       <div class="step">
         <el-steps :active="stepActive"
@@ -45,16 +47,17 @@
                    @click="stepActive+=1">下一步</el-button>
       </div>
     </el-dialog>
-    <button @click="testName">接口测试</button>
+    <a :href="uploadFileUrl">下载文件</a>
   </div>
 </template>
 
 <script>
-import {testName} from '../api/api'
+import {testName, uploadFile} from '../api/api'
 export default {
   name: 'echart',
   data () {
     return {
+      uploadFileUrl: '',
       selectEcharts: false, // 模态框开关
       selectEchart: -1, // 0:折线图 1: 柱状图 2:饼图
       stepActive: 0 // 步骤条
@@ -66,6 +69,7 @@ export default {
   methods: {
     init () {
     },
+    // 接口测试专用
     testName () {
       testName().then(res => {
       })
@@ -82,6 +86,26 @@ export default {
           this.selectEchart = 2
           break
       }
+    },
+    // 文件上传
+    fileUpload (event) {
+      // 上传文件
+      console.log(event)
+
+      let file = event.target.files
+      let formData = new window.FormData(document.getElementById('upload')[0])
+      formData.append('file', file[0])
+      console.log(formData.get('file'))
+      // 文件上传
+      uploadFile(formData).then(res => {
+        if (res.data.success) {
+          this.uploadFileUrl = res.data.data
+          this.$message({
+            message: res.data.message,
+            type: 'success'
+          })
+        }
+      })
     }
   }
 }

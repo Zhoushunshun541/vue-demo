@@ -32,7 +32,7 @@ export default {
   data () {
     return {
       bgConfig: {
-        color: '85,168,248', // 线条颜色
+        color: '107, 148, 244', // 线条颜色
         pointColor: '85,168,248',
         opacity: 1, // 透明度
         count: 500 // 线条数量500

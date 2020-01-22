@@ -44,3 +44,9 @@ export const getAllUser = params => {
 export const testName = params => {
   return instance.post('/api/login/testName', qs.stringify(params))
 }
+// 文件上传
+export const uploadFile = params => {
+  console.log(instance.defaults)
+  instance.defaults.headers.post['Content-Type'] = 'multipart/form-data; boundary=OCqxMF6-JxtxoMDHmoG5W5eY9MGRsTBp'
+  return instance.post('/api/upload', params)
+}
