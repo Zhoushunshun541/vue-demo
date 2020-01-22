@@ -95,7 +95,6 @@ export default {
       let file = event.target.files
       let formData = new window.FormData(document.getElementById('upload')[0])
       formData.append('file', file[0])
-      console.log(formData.get('file'))
       // 文件上传
       uploadFile(formData).then(res => {
         if (res.data.success) {
