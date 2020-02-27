@@ -400,7 +400,6 @@ export default {
         //   center: ['50%', '60%'],
         //   data: []
         // }
-
         // series.name = res.name
         // series.data.push(res.data[0])
         // series.color = res.color
@@ -441,6 +440,3 @@ export default {
   }
 }
 </script>
-
-<style>
-</style>

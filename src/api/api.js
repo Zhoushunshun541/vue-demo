@@ -47,6 +47,6 @@ export const testName = params => {
 // 文件上传
 export const uploadFile = params => {
   console.log(instance.defaults)
-  instance.defaults.headers.post['Content-Type'] = 'multipart/form-data'
+  instance.defaults.headers.post['Content-Type'] = 'multipart/form-data;'
   return instance.post('/api/upload', params)
 }
