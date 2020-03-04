@@ -51,6 +51,10 @@ const routes = new Router({
         name: 'dynamicEchart',
         component: (resolve) => require(['../views/dynamicEchart.vue'], resolve)
       }]
+    }, {
+      path: '/h5_index',
+      name: 'h5_index',
+      component: (resolve) => require(['../views/h5_index.vue'], resolve)
     }
   ]
 })
