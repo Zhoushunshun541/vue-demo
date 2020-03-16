@@ -78,6 +78,7 @@ export default {
       navigator.mediaDevices
         .getUserMedia(constraints)
         .then(function (stream) {
+          console.log(stream)
           // 旧的浏览器可能没有srcObject
           if ('srcObject' in _this.thisVideo) {
             _this.thisVideo.srcObject = stream
