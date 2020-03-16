@@ -1,10 +1,13 @@
 
 <template>
   <div>
+    <el-button type="primary" @click="openCamera">打开摄像头</el-button>
+    <div class="test">
     <video autoplay
            playsinline
            ref="video"
            id="video"></video>
+    </div>
     <canvas id="canvas"
             width="500"
             height="400"
@@ -60,7 +63,6 @@ export default {
   },
   mounted () {
     this.videoEle = this.$refs.video
-    this.openCamera()
   },
   destroyed () {
     // 停止侦测
@@ -70,3 +72,8 @@ export default {
   }
 }
 </script>
+<style lang="less" scoped>
+.test{
+  background: rgba(0, 0, 0,0.1);
+}
+</style>
