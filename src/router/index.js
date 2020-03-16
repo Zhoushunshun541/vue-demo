@@ -87,15 +87,16 @@ routes.beforeEach((to, from, next) => {
     store.commit('del_token')
     next()
   } else {
-    let token = localStorage.getItem('token')
-    if (token === null || token === '') {
-      next({
-        path: '/login',
-        query: {redirect: to.fullPath}
-      })
-    } else {
-      next()
-    }
+    next()
+    // let token = localStorage.getItem('token')
+    // if (token === null || token === '') {
+    //   next({
+    //     path: '/login',
+    //     query: {redirect: to.fullPath}
+    //   })
+    // } else {
+    //   next()
+    // }
   }
 })
 
