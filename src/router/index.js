@@ -55,6 +55,10 @@ const routes = new Router({
       path: '/h5_index',
       name: 'h5_index',
       component: (resolve) => require(['../views/h5_index.vue'], resolve)
+    }, {
+      path: '/pl_table',
+      name: 'pl_table',
+      component: (resolve) => require(['../views/pl_table.vue'], resolve)
     }
   ]
 })
