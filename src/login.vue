@@ -1,19 +1,11 @@
 <template>
   <div class="login">
-    <div :class="changeBg == 1?'your-name':''">
-      <template v-if="changeBg == 0" >
-        <vue-canvas-nest :config='bgConfig'></vue-canvas-nest>
-      </template>
-      <div class="login-model">
-        <div class="mb10 login-title" style="color:#fff;">梦入江南</div>
-        <div class="mb20 bb-color">
-          <input type="text" v-model="username" placeholder="请输入账户" class="login-input">
-        </div>
-        <div class="mb20 bb-color">
-          <input type="password" v-model="passport" placeholder="请输入密码" class="login-input">
-        </div>
-        <!-- element组件的键盘事件需要添加native才可以  原生的不需要 -->
-        <el-button type="primary" round  :loading="loading" @click="login">登录</el-button>
+  测试一下
+    <vue-canvas-nest :config='bgConfig'></vue-canvas-nest>
+    <div class="login-model">
+      <div class="mb10 login-title" style="color:#fff;">登录</div>
+      <div class="mb20 bb-color">
+        <input type="text" v-model="name" placeholder="请输入账户" class="login-input">
       </div>
       <div class="change-bg">
         <el-button @click="changeBg = 0" :style="{'color':changeBg==0?'#000':'#fff'}">动态</el-button>
