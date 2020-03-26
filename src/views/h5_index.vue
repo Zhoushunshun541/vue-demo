@@ -1,61 +1,134 @@
-
 <template>
-  <div>
-    <el-button type="primary" @click="openCamera">打开摄像头</el-button>
-    <div class="test">
-    <video autoplay
-           playsinline
-           ref="video"
-           id="video"></video>
+  <div class="camera_outer">
+    <video
+      id="videoCamera"
+      :width="videoWidth"
+      :height="videoHeight"
+      autoplay
+    ></video>
+    <canvas
+      style="display:none;"
+      id="canvasCamera"
+      :width="videoWidth"
+      :height="videoHeight"
+    ></canvas>
+
+    <div v-if="imgSrc" class="img_bg_camera">
+      <img :src="imgSrc" alt="" class="tx_img" />
     </div>
-    <canvas id="canvas"
-            width="500"
-            height="400"
-            class="canvas"></canvas>
-    <div @click="submit">上传照片</div>
+    <button @click="getCompetence()">打开摄像头</button>
+    <button @click="stopNavigator()">关闭摄像头</button>
+    <button @click="setImage()">拍照</button>
   </div>
 </template>
 <script>
-import '@/assets/js/face-min.js'
 export default {
-  name: 'componentName',
   data () {
     return {
-      videoEle: null
+      videoWidth: 3000,
+      videoHeight: 300,
+      imgSrc: '',
+      thisCancas: null,
+      thisContext: null,
+      thisVideo: null
     }
   },
   methods: {
-    openCamera () {
-      let tracker = new window.tracking.ObjectTracker('face')
-      tracker.setStepSize(2)
-      // //  转头角度影响识别率
-      tracker.setEdgesDensity(0.13)
-      tracker.setInitialScale(5)
-      this.trackerTask = window.tracking.track('#video', tracker, {camera: true})
-      tracker.on('track', (event) => {
-        if (event.data.length > 0) {
-          console.log('有头像')
-          // 人脸位置矩形顶点
-          console.log(event.data)
-        } else {
-          console.log('没有头像')
+    // 调用权限（打开摄像头功能）
+    getCompetence () {
+      var _this = this
+      this.thisCancas = document.getElementById('canvasCamera')
+      this.thisContext = this.thisCancas.getContext('2d')
+      this.thisVideo = document.getElementById('videoCamera')
+      // 旧版本浏览器可能根本不支持mediaDevices，我们首先设置一个空对象
+      if (navigator.mediaDevices === undefined) {
+        navigator.mediaDevices = {}
+      }
+      // 一些浏览器实现了部分mediaDevices，我们不能只分配一个对象
+      // 使用getUserMedia，因为它会覆盖现有的属性。
+      // 这里，如果缺少getUserMedia属性，就添加它。
+      if (navigator.mediaDevices.getUserMedia === undefined) {
+        navigator.mediaDevices.getUserMedia = function (constraints) {
+          // 首先获取现存的getUserMedia(如果存在)
+          var getUserMedia =
+            navigator.webkitGetUserMedia ||
+            navigator.mozGetUserMedia ||
+            navigator.getUserMedia
+          // 有些浏览器不支持，会返回错误信息
+          // 保持接口一致
+          if (!getUserMedia) {
+            return Promise.reject(
+              new Error('getUserMedia is not implemented in this browser')
+            )
+          }
+          // 否则，使用Promise将调用包装到旧的navigator.getUserMedia
+          return new Promise(function (resolve, reject) {
+            getUserMedia.call(navigator, constraints, resolve, reject)
+          })
         }
-      })
-    }
-  },
-  mounted () {
-    this.videoEle = this.$refs.video
-  },
-  destroyed () {
-    // 停止侦测
-    this.trackerTask.stop()
+      }
+      var constraints = {
+        audio: false,
+        video: {
+          width: this.videoWidth,
+          height: this.videoHeight,
+          transform: 'scaleX(-1)'
+        }
+      }
+      navigator.mediaDevices
+        .getUserMedia(constraints)
+        .then(function (stream) {
+          console.log(stream)
+          // 旧的浏览器可能没有srcObject
+          if ('srcObject' in _this.thisVideo) {
+            _this.thisVideo.srcObject = stream
+          } else {
+            // 避免在新的浏览器中使用它，因为它正在被弃用。
+            _this.thisVideo.src = window.URL.createObjectURL(stream)
+          }
+          _this.thisVideo.onloadedmetadata = function (e) {
+            _this.thisVideo.play()
+          }
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    //  绘制图片（拍照功能）
+
+    setImage () {
+      var _this = this
+      // 点击，canvas画图
+      _this.thisContext.drawImage(
+        _this.thisVideo,
+        0,
+        0,
+        _this.videoWidth,
+        _this.videoHeight
+      )
+      // 获取图片base64链接
+      var image = this.thisCancas.toDataURL('image/png')
+      _this.imgSrc = image
+      this.$emit('refreshDataList', this.imgSrc)
+    },
+    // base64转文件
+
+    dataURLtoFile (dataurl, filename) {
+      var arr = dataurl.split(',')
+      var mime = arr[0].match(/:(.*?);/)[1]
+      var bstr = atob(arr[1])
+      var n = bstr.length
+      var u8arr = new Uint8Array(n)
+      while (n--) {
+        u8arr[n] = bstr.charCodeAt(n)
+      }
+      return new File([u8arr], filename, { type: mime })
+    },
     // 关闭摄像头
-    window.tracking.closeCamera()
+
+    stopNavigator () {
+      this.thisVideo.srcObject.getTracks()[0].stop()
+    }
   }
 }
 </script>
-<style lang="less" scoped>
-.test{
-  background: rgba(0, 0, 0,0.1);
-}
-</style>
