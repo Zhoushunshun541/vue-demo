@@ -1,5 +1,7 @@
 <template>
   <div class="login">
+    测试一下
+    <input type="search"></input>
     <vue-canvas-nest :config='bgConfig'></vue-canvas-nest>
     <div class="login-model">
       <div class="mb10 login-title" style="color:#fff;">登录</div>
